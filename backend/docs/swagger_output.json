@@ -1,0 +1,882 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "登入驗證"
+    },
+    {
+      "name": "Category",
+      "description": "類別 router"
+    },
+    {
+      "name": "ToDoList",
+      "description": "代辦事項 router"
+    },
+    {
+      "name": "User",
+      "description": "使用者 router"
+    },
+    {
+      "name": "Admin",
+      "description": "管理者 router"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "登入",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "info",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "user001"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "user001"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login succeed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoidXNlcjAwMSIsIm5hbWUiOiJ1c2VyMDAxIiwidHlwZSI6IuS9v-eUqOiAhSJ9LCJpYXQiOjE2ODU4MDk5MDAsImV4cCI6MjI5MDYwOTkwMH0.N74XF8SG-edT-3Bl2Z7C_YdTpxDM1R9FZXpYPcZX1iw"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Login failed."
+          }
+        }
+      }
+    },
+    "/api/admin/user/all": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "取得所有使用者資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "array of all user info.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "user002"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "user002"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "user002"
+                  },
+                  "admin": {
+                    "type": "string",
+                    "example": "N"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/user/info": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "取得目前使用者資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "使用者名稱，屬性為 name，type 為字串",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/user/create": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "建立使用者",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "admin",
+            "in": "body",
+            "description": "The attribute of a new user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "user007"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "user007"
+                },
+                "user_name": {
+                  "type": "string",
+                  "example": "007"
+                },
+                "admin": {
+                  "type": "string",
+                  "example": "N"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User create succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/admin/user/delete/{user}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "刪除使用者 {user}",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "admin",
+            "in": "path",
+            "description": "The user ID that is to be deleted.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/admin/user/update/{user}": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "修改使用者 {user} 資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "admin",
+            "in": "body",
+            "description": "Attribute of the update user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "admin": {
+                  "type": "string",
+                  "example": "N"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User update succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/user/info": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "取得目前使用者資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "使用者名稱，屬性為 name ，type 為字串",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/user/signUp": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "註冊新使用者",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "new user's information.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "new_user"
+                },
+                "user_name": {
+                  "type": "string",
+                  "example": "new_user"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "new_user"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新使用者資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string",
+                  "example": "new_user"
+                },
+                "user_name": {
+                  "type": "string",
+                  "example": "new_user"
+                },
+                "admin": {
+                  "type": "string",
+                  "example": "N"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/cat/{user}/cats": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "取得使用者 {user} 的所有類別資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "array of categories",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "user001"
+                },
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Category"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/cat/{cat}/to_do_lists": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "取得 {cat} 的所有事件",
+        "description": "",
+        "parameters": [
+          {
+            "name": "cat",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "category ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of to do list",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cat_name": {
+                  "type": "string",
+                  "example": "Work"
+                },
+                "to_do_lists": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ToDoList"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/cat/update/{cat}": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "修改類別 {cat} 內容",
+        "description": "",
+        "parameters": [
+          {
+            "name": "cat",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the category to be updated"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "body",
+            "description": "The name of the category",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cat_name": {
+                  "type": "string",
+                  "example": "work"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "category update succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/cat/delete/{cat}": {
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "刪除類別 {cat}",
+        "description": "",
+        "parameters": [
+          {
+            "name": "cat",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the category to be deleted."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category delete succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/cat/create": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "建立類別",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "cat",
+            "in": "body",
+            "description": "The attribute of category",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cat_name": {
+                  "type": "string",
+                  "example": "Work"
+                },
+                "user": {
+                  "type": "string",
+                  "example": "user001"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category create succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/todo/{todo}": {
+      "get": {
+        "tags": [
+          "ToDoList"
+        ],
+        "summary": "取得目前工作 {todo} 資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "todo",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Object of toDoList",
+            "schema": {
+              "$ref": "#/definitions/ToDoList"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/todo/{user}/all": {
+      "get": {
+        "tags": [
+          "ToDoList"
+        ],
+        "summary": "取得使用者 {user} 的所有 toDoList 資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "array of all toDoList",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 2
+                  },
+                  "category": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "date": {
+                    "type": "string",
+                    "example": "2023/06/04"
+                  },
+                  "content": {
+                    "type": "string",
+                    "example": "todo2"
+                  },
+                  "is_done": {
+                    "type": "string",
+                    "example": "N"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/todo/update/{todo}": {
+      "post": {
+        "tags": [
+          "ToDoList"
+        ],
+        "summary": "更新工作 {todo} 資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "todo",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the list to be updated."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "description": "the content to be updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "example": "2023/01/01"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "this is the update content"
+                },
+                "is_done": {
+                  "type": "string",
+                  "example": "Y"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/todo/delete/{todo}": {
+      "delete": {
+        "tags": [
+          "ToDoList"
+        ],
+        "summary": "刪除工作 {todo}",
+        "description": "",
+        "parameters": [
+          {
+            "name": "todo",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the toDoList to be deleted."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ToDoList delete succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/user/todo/create": {
+      "post": {
+        "tags": [
+          "ToDoList"
+        ],
+        "summary": "建立工作",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "todo",
+            "in": "body",
+            "description": "The attribute of toDoList",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "number",
+                  "example": 2
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2023/06/04"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "Today is June fourth"
+                },
+                "is_done": {
+                  "type": "string",
+                  "example": "N"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "toDoList create succeed."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "example": "user001"
+        },
+        "name": {
+          "type": "string",
+          "example": "user001"
+        },
+        "isAdmin": {
+          "type": "string",
+          "example": "N"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Work"
+        }
+      }
+    },
+    "ToDoList": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "date": {
+          "type": "string",
+          "example": "2023/06/01"
+        },
+        "content": {
+          "type": "string",
+          "example": "This is a work."
+        },
+        "isDone": {
+          "type": "string",
+          "example": "Y"
+        }
+      }
+    }
+  }
+}
