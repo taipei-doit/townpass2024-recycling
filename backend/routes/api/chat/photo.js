@@ -18,7 +18,7 @@ const encodeImageToBase64 = (filePath) => {
 };
 
 // 路由：處理圖片上傳和調用 OpenAI API
-router.post("/upload", upload.single("image"), async (req, res) => {
+router.get("/category", upload.single("image"), async (req, res) => {
   try {
     const imagePath = req.file.path;
     const base64Image = encodeImageToBase64(imagePath);
@@ -92,7 +92,7 @@ router.post("/upload", upload.single("image"), async (req, res) => {
   }
 });
 
-router.post("/upload/thing", upload.single("image"), async (req, res) => {
+router.get("/thing", upload.single("image"), async (req, res) => {
   try {
     const imagePath = req.file.path;
     const base64Image = encodeImageToBase64(imagePath);
