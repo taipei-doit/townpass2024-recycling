@@ -25,7 +25,7 @@ const recyclingGuide = `
   `;
 
 // 路由：處理圖片上傳和調用 OpenAI API
-router.post("/send", async (req, res) => {
+router.get("/category", async (req, res) => {
   try {
     var msg = req.body.msg;
     const payload = {

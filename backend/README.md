@@ -1,47 +1,53 @@
-# Lapras-Backend
+# Recycling - Backend
 
-## 下載和設定專案
-### 必要軟體
-請先安裝以下軟體
-- [Node.js](https://nodejs.org/zh-tw/download/)
+The project builds RESTful APIs using Node.js, Express, etc.
 
-### 下載專案
-使用 Git，透過 `clone` 指令下載專案檔案
-```
-git clone [專案名稱]
+- [Express.js Repository](https://github.com/expressjs/express)
+- [Node.js](https://nodejs.org/zh-tw)
+
+## Features
+
+- 與 Recycling Frontend 進行溝通
+- 負責分辨圖像、文字的內容並回覆垃圾類別
+
+## Manual Installation
+
+Clone the repo:
+
+```bash
+git clone https://github.com/taipei-doit/townpass2024-recycling.git
+cd backend
 ```
 
-### 安裝相關套件
-- 專案使用到的套件已經設定在 *package.json*
-- 在終端機中執行以下指令，安裝相關套件
-```
+Install the dependencies:
+
+```bash
 npm install
 ```
 
-## 啟動專案
+Set the environment variables:
 
-啟動專案前，<font color="red">**記得先啟動 MySQL**</font>
-
-執行以下指令，啟動後端伺服器
+```bash
+cp .env.example .env
+# open .env and modify the environment variables
 ```
+
+## Commands
+
+Running in development:
+
+```bash
 npm start
 ```
 
-用瀏覽器打開 http://localhost:8080/ ，可以檢查是否正常運作
+run on http://localhost:8080/
 
-### 產生 API 文件
+## API Endpoints
 
-- 執行 *scripts/doc_gen.js* 產生文件內容
-- 用瀏覽器打開 http://localhost:8080/doc 可以看到 API 文件
+List of available routes:
 
+**Chat routes:**
 
-## 後端api
-
-
-### /api/chat/photo/upload
-
-上傳圖片
-
-### /api/chat/text/send
-
-傳送問題
+- `GET /api/chat/photo/category` - 上傳圖片的垃圾類別
+- `GET /api/chat/photo/thing` - 上傳圖片的垃圾名稱
+- `GET /api/chat/text/category` - 傳送文字的垃圾類別
