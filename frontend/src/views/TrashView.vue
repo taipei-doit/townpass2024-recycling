@@ -102,7 +102,7 @@ const onClick = (type: string) => {
 
 const onSearchClick = () => {
   loading.value = !loading.value; // 顯示加載中
-  fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/text/send', {
+  fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/text/category', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -208,11 +208,11 @@ const confirmPhoto = async () => {
 
   try {
     const [response1, response2] = await Promise.all([
-      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/upload', {
+      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/category', {
         method: 'POST',
         body: formData
       }),
-      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/upload/thing', {
+      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/thing', {
         method: 'POST',
         body: formData
       })
@@ -272,11 +272,11 @@ const uploadImage = async (formData) => {
 
   try {
     const [response1, response2] = await Promise.all([
-      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/upload', {
+      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/category', {
         method: 'POST',
         body: formData
       }),
-      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/upload/thing', {
+      fetch('https://lapras-backend-752705272074.asia-east1.run.app/api/chat/photo/thing', {
         method: 'POST',
         body: formData
       })
